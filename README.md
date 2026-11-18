@@ -11,3 +11,10 @@ Server-authoritative auto-buy for a game you own, laid out for [Rojo](https://ro
 
 Assumes a `leaderstats` value named `Cash`; replace `grantItem()` with your game's real item-granting logic.
 Without Rojo, paste each file into Studio as a ModuleScript / Script / LocalScript in the matching service.
+
+## Anti-cheat testing (Studio only)
+
+`src/StarterPlayerScripts/ExploitSimulator.client.lua` simulates common cheater behaviour (speed/jump tampering,
+teleporting, fuzzing and spamming RemoteEvents) so you can confirm your **server-side** anti-cheat reacts.
+It exits immediately outside Roblox Studio. Run it via Test > Start (server + client) and watch the server output.
+Toggle individual tests in `TESTS_ENABLED`.
