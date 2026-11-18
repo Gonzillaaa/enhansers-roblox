@@ -31,7 +31,57 @@ local function placeAllowed()
 end
 
 if not placeAllowed() then
-    warn("[ACTester] PlaceId " .. tostring(game.PlaceId) .. " is not in ALLOWED_PLACE_IDS. Edit the script and add your game's PlaceId. Aborting.")
+    local placeId = tostring(game.PlaceId)
+    warn("[ACTester] PlaceId " .. placeId .. " is not in ALLOWED_PLACE_IDS. Edit the script and add it. Aborting.")
+
+    -- Show the PlaceId on screen so it can be read and copied without a console.
+    pcall(function()
+        local notice = Instance.new("ScreenGui")
+        notice.Name = "ACTesterNotice"
+        notice.ResetOnSpawn = false
+        local ok = pcall(function()
+            notice.Parent = gethui and gethui() or game:GetService("CoreGui")
+        end)
+        if not ok or not notice.Parent then
+            notice.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+        end
+
+        local box = Instance.new("Frame")
+        box.Size = UDim2.new(0, 340, 0, 110)
+        box.Position = UDim2.new(0.5, -170, 0, 30)
+        box.BackgroundColor3 = Color3.fromRGB(24, 24, 32)
+        box.BorderSizePixel = 0
+        box.Parent = notice
+        local c = Instance.new("UICorner")
+        c.CornerRadius = UDim.new(0, 12)
+        c.Parent = box
+
+        local msg = Instance.new("TextLabel")
+        msg.BackgroundTransparency = 1
+        msg.Size = UDim2.new(1, -20, 0, 50)
+        msg.Position = UDim2.new(0, 10, 0, 8)
+        msg.TextWrapped = true
+        msg.TextSize = 14
+        msg.Font = Enum.Font.Gotham
+        msg.TextColor3 = Color3.fromRGB(235, 235, 245)
+        msg.Text = "AC Tester is locked. Put this PlaceId in ALLOWED_PLACE_IDS, then run the script again:"
+        msg.Parent = box
+
+        local idBox = Instance.new("TextBox")
+        idBox.Size = UDim2.new(1, -20, 0, 32)
+        idBox.Position = UDim2.new(0, 10, 0, 66)
+        idBox.BackgroundColor3 = Color3.fromRGB(36, 36, 48)
+        idBox.BorderSizePixel = 0
+        idBox.ClearTextOnFocus = false
+        idBox.Text = placeId
+        idBox.TextSize = 18
+        idBox.Font = Enum.Font.GothamBold
+        idBox.TextColor3 = Color3.fromRGB(120, 255, 170)
+        idBox.Parent = box
+        local c2 = Instance.new("UICorner")
+        c2.CornerRadius = UDim.new(0, 8)
+        c2.Parent = idBox
+    end)
     return
 end
 
